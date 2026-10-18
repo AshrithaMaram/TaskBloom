@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="TaskBloom - Your colorful daily planner, calendar and Pomodoro focus timer."
+    />
+    <meta name="theme-color" content="#ff4f9a" />
+    <title>TaskBloom | Daily Planner & Focus Timer</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <a href="#dashboard" class="brand">
+          <span class="brand-icon">✿</span>
+          <span>TaskBloom</span>
+        </a>
+
+        <nav class="sidebar-nav" aria-label="Main navigation">
+          <a href="#dashboard" class="nav-link active">🏠 Dashboard</a>
+          <a href="#calendar-section" class="nav-link">📅 My Calendar</a>
+          <a href="#tasks" class="nav-link">✅ Daily Tasks</a>
+          <a href="#pomodoro-section" class="nav-link">⏱️ Focus Timer</a>
+        </nav>
+
+        <div class="sidebar-note">
+          <span>🌷</span>
+          <p>Dream big, start small, and celebrate every little win!</p>
+        </div>
+      </aside>
+
+      <!-- Main dashboard -->
+      <main class="main-content" id="dashboard">
+        <header class="page-header">
+          <div>
+            <p class="eyebrow">YOUR COLORFUL PRODUCTIVITY SPACE ✨</p>
+            <h1>My Dashboard <span>🌸</span></h1>
+            <p class="subtitle">
+              A little progress every day adds up to big results.
+            </p>
+          </div>
+
+          <div class="date-card">
+            <span>📅</span>
+            <span id="current-date">Your daily planner</span>
+          </div>
+        </header>
+
+        <!-- Daily calendar -->
+        <section class="calendar-section" id="calendar-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">PLAN YOUR DAYS</p>
+              <h2>My Calendar 🗓️</h2>
+              <p>Select any date to view and organize its tasks.</p>
+            </div>
+            <button type="button" id="today-button" class="today-button">
+              Go to Today
+            </button>
+          </div>
+
+          <div class="calendar-card">
+            <div class="calendar-header">
+              <button
+                type="button"
+                id="prev-month"
+                class="calendar-nav"
+                aria-label="Previous month"
+              >
+                ‹
+              </button>
+
+              <h3 id="calendar-month">Month Year</h3>
+
+              <button
+                type="button"
+                id="next-month"
+                class="calendar-nav"
+                aria-label="Next month"
+              >
+                ›
+              </button>
+            </div>
+
+            <div class="calendar-weekdays" aria-hidden="true">
+              <span>Sun</span>
+              <span>Mon</span>
+              <span>Tue</span>
+              <span>Wed</span>
+              <span>Thu</span>
+              <span>Fri</span>
+              <span>Sat</span>
+            </div>
+
+            <div
+              id="calendar-days"
+              class="calendar-days"
+              aria-label="Choose a date"
+            ></div>
+
+            <div class="calendar-legend">
+              <span><i class="legend-dot today-dot"></i> Today</span>
+              <span><i class="legend-dot task-dot"></i> Has tasks</span>
+              <span><i class="legend-dot selected-dot"></i> Selected</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Add a task to selected date -->
+        <section class="add-task-section" aria-labelledby="add-task-heading">
+          <p class="eyebrow">MAKE IT HAPPEN 💖</p>
+          <h2 id="add-task-heading">What's on your agenda?</h2>
+          <p class="selected-date-label">
+            Planning for <strong id="selected-date-label">Today</strong>
+          </p>
+
+          <form id="task-form">
+            <label for="task-input">Task name</label>
+
+            <div class="task-input-row">
+              <input
+                type="text"
+                id="task-input"
+                name="task"
+                placeholder="e.g. Practice Java for 30 minutes"
+                maxlength="120"
+                required
+              />
+              <button type="submit" id="add-task-button">+ Add Task</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Statistics for selected day -->
+        <section
+          class="stats-grid"
+          id="progress"
+          aria-label="Selected day's statistics"
+        >
+          <article class="stat-card total-card">
+            <span class="stat-icon">📋</span>
+            <p>Total Tasks</p>
+            <h3 id="total-count">0</h3>
+          </article>
+
+          <article class="stat-card completed-card">
+            <span class="stat-icon">🌈</span>
+            <p>Completed</p>
+            <h3 id="completed-count">0</h3>
+          </article>
+
+          <article class="stat-card pending-card">
+            <span class="stat-icon">⚡</span>
+            <p>Pending</p>
+            <h3 id="pending-count">0</h3>
+          </article>
+        </section>
+
+        <!-- Tasks for selected day -->
+        <section class="tasks-section" id="tasks">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">YOUR DAILY WINS</p>
+              <h2>My Tasks <span>🌷</span></h2>
+              <p>Every completed task is a step forward.</p>
+            </div>
+
+            <label for="task-filter" class="filter-label">
+              Filter:
+              <select id="task-filter" name="filter">
+                <option value="all">All Tasks</option>
+                <option value="pending">Pending</option>
+                <option value="completed">Completed</option>
+              </select>
+            </label>
+          </div>
+
+          <div id="task-list" class="task-list" aria-live="polite">
+            <div class="empty-state" id="empty-state">
+              <span class="empty-icon">🌷</span>
+              <h3>Your journey starts here!</h3>
+              <p>Add your first task to make today count.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Pomodoro timer -->
+
+        <section class="pomodoro-section" id="pomodoro-section">
+          <div class="pomodoro-card pomodoro-layout-b">
+            <!-- LEFT: FOCUS TIMER -->
+            <div class="pomodoro-main-panel">
+              <div class="pomodoro-badge">🌸 FOCUS SESSION</div>
+
+              <div class="timer-main-display">
+                <span class="timer-icon">🍓</span>
+
+                <time
+                  id="timer-display"
+                  role="timer"
+                  aria-label="Time remaining"
+                  >25:00</time
+                >
+              </div>
+
+              <div
+                class="timer-progress-track"
+                role="progressbar"
+                aria-label="Timer progress"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="0"
+              >
+                <div id="timer-progress-bar"></div>
+              </div>
+
+              <p id="timer-status" class="timer-status" aria-live="polite">
+                Ready to focus!
+              </p>
+
+              <p class="timer-description">
+                Work with intention. Give your dreams your full attention.
+              </p>
+
+              <div class="timer-controls">
+                <button type="button" id="start-timer" class="timer-start">
+                  ▶ Start Focus
+                </button>
+
+                <button
+                  type="button"
+                  id="pause-timer"
+                  class="timer-pause"
+                  disabled
+                >
+                  ⏸ Pause
+                </button>
+
+                <button type="button" id="reset-timer" class="timer-reset">
+                  ↻ Reset
+                </button>
+              </div>
+            </div>
+
+            <!-- RIGHT: SETTINGS, QUOTE AND SESSION STATS -->
+            <aside class="timer-side-panel">
+              <div class="timer-duration-control timer-side-card">
+                <h3>◷ Focus duration</h3>
+
+                <div class="duration-adjuster">
+                  <button
+                    type="button"
+                    id="duration-minus"
+                    aria-label="Decrease duration"
+                  >
+                    −
+                  </button>
+
+                  <input
+                    type="number"
+                    id="timer-minutes"
+                    min="1"
+                    max="180"
+                    step="1"
+                    value="25"
+                    inputmode="numeric"
+                    aria-label="Focus duration in minutes"
+                  />
+
+                  <button
+                    type="button"
+                    id="duration-plus"
+                    aria-label="Increase duration"
+                  >
+                    +
+                  </button>
+                </div>
+
+                <small>Choose between 1 and 180 minutes.</small>
+              </div>
+
+              <div class="quote-box timer-side-card" aria-live="polite">
+                <p class="quote-label">✨ YOUR DAILY REMINDER</p>
+
+                <p id="motivational-quote">
+                  Small steps every day lead to big changes.
+                </p>
+
+                <p id="quote-author">— Your future self</p>
+              </div>
+
+              <div class="focus-stats timer-side-card">
+                <span>🏆 Completed Focus Sessions</span>
+                <strong id="sessions-count">0</strong>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <footer class="page-footer">
+          <p>Made with ♡ and a little sparkle. Keep blooming! 🌷</p>
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>
